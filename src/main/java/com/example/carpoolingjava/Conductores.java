@@ -38,6 +38,14 @@ public class Conductores {
         promedioCalificacion = (double) sumaCalificaciones / cantidadCalificaciones;
     }
 
+    public int getCantidadCalificaciones() {
+        return cantidadCalificaciones;
+    }
+
+    public void setCantidadCalificaciones(int cantidadCalificaciones) {
+        this.cantidadCalificaciones = cantidadCalificaciones;
+    }
+
     public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
     }
