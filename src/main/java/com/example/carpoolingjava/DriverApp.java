@@ -8,8 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class DriverApp extends Application {
-    private static final String FILE_PATH = "conductor.json";
     private Conductores conductoresActual;
 
     public static void main(String[] args) {
@@ -59,21 +60,26 @@ public class DriverApp extends Application {
             int nodo = Integer.parseInt(nodoRegistro.getText());
             String direccion = direccionRegistro.getText();
 
-            Conductores nuevoConductores = new Conductores(carnet, nodo, direccion);
-            JSONHandlerConductor.escribirConductores(nuevoConductores, FILE_PATH);
+            Conductores nuevoConductor = new Conductores(carnet, nodo, direccion);
+            List<Conductores> conductoresList = JSONHandlerConductor.leerConductores();
+            conductoresList.add(nuevoConductor);
+            JSONHandlerConductor.guardarConductores(conductoresList);
         });
 
         // Inicio de sesión
         loginButton.setOnAction(e -> {
             String carnet = carnetLogin.getText();
 
-            Conductores conductores = JSONHandlerConductor.leerConductores(FILE_PATH);
-            if (conductores != null && conductores.getCarnet().equals(carnet)) {
-                conductoresActual = conductores;
-                System.out.println("Inicio de sesión exitoso. Conductor actual: " + conductores);
-            } else {
-                System.out.println("Inicio de sesión fallido. Conductor no encontrado.");
+            List<Conductores> conductoresList = JSONHandlerConductor.leerConductores();
+            for (Conductores conductor : conductoresList) {
+                if (conductor.getCarnet().equals(carnet)) {
+                    conductoresActual = conductor;
+                    System.out.println("Inicio de sesión exitoso. Conductor actual: " + conductor);
+                    return;
+                }
             }
+
+            System.out.println("Inicio de sesión fallido. Conductor no encontrado.");
         });
 
         primaryStage.show();

@@ -1,5 +1,6 @@
 package com.example.carpoolingjava;
 
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,9 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class EmployeeApp extends Application {
-    private static final String FILE_PATH = "usuario.json";
-    private Usuario usuarioActual;
+    private static final String FILE_PATH = "usuarios.json";
+    private List<Usuario> usuarios;
 
     public static void main(String[] args) {
         launch(args);
@@ -53,6 +56,9 @@ public class EmployeeApp extends Application {
         Scene scene = new Scene(grid, 300, 200);
         primaryStage.setScene(scene);
 
+        // Cargar usuarios existentes
+        usuarios = JSONHandlerUsuario.leerUsuarios(FILE_PATH);
+
         // Registro de usuario
         registroButton.setOnAction(e -> {
             String carnet = carnetRegistro.getText();
@@ -60,16 +66,21 @@ public class EmployeeApp extends Application {
             String direccion = direccionRegistro.getText();
 
             Usuario nuevoUsuario = new Usuario(carnet, nodo, direccion);
-            JSONHandler.escribirUsuario(nuevoUsuario, FILE_PATH);
+            usuarios.add(nuevoUsuario);
+
+            JSONHandlerUsuario.escribirUsuarios(usuarios, FILE_PATH);
         });
 
         // Inicio de sesión
         loginButton.setOnAction(e -> {
             String carnet = carnetLogin.getText();
 
-            Usuario usuario = JSONHandler.leerUsuario(FILE_PATH);
-            if (usuario != null && usuario.getCarnet().equals(carnet)) {
-                usuarioActual = usuario;
+            Usuario usuario = usuarios.stream()
+                    .filter(u -> u.getCarnet().equals(carnet))
+                    .findFirst()
+                    .orElse(null);
+
+            if (usuario != null) {
                 System.out.println("Inicio de sesión exitoso. Usuario actual: " + usuario);
             } else {
                 System.out.println("Inicio de sesión fallido. Usuario no encontrado.");
@@ -79,5 +90,4 @@ public class EmployeeApp extends Application {
         primaryStage.show();
     }
 }
-
 
