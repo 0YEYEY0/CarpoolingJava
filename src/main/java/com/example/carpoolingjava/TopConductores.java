@@ -9,14 +9,27 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * Clase principal que representa la aplicación para mostrar el Top 5 de conductores.
+ */
 public class TopConductores extends Application {
 
     private TextArea conductoresTop5TextArea;
 
+    /**
+     * Método principal que inicia la aplicación.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan).
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Método que configura la interfaz gráfica de la aplicación.
+     *
+     * @param primaryStage Escenario principal de la aplicación.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Top 5 Conductores App");
@@ -36,6 +49,9 @@ public class TopConductores extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Método que muestra el Top 5 de conductores en el área de texto.
+     */
     private void mostrarTop5Conductores() {
         List<Conductores> conductoresList = JSONHandlerConductor.leerConductores();
 
@@ -55,4 +71,3 @@ public class TopConductores extends Application {
         }
     }
 }
-

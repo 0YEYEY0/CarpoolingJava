@@ -1,6 +1,5 @@
 package com.example.carpoolingjava;
 
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,16 +8,30 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que representa la aplicación para empleados en el sistema de carpooling.
+ */
 public class EmployeeApp extends Application {
     private static final String FILE_PATH = "usuarios.json";
     private List<Usuario> usuarios;
 
+    /**
+     * Método principal que inicia la aplicación JavaFX.
+     *
+     * @param args Argumentos de línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Método que configura y muestra la interfaz de usuario de la aplicación.
+     *
+     * @param primaryStage El escenario principal de la aplicación.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Employee App");
@@ -57,7 +70,7 @@ public class EmployeeApp extends Application {
         primaryStage.setScene(scene);
 
         // Cargar usuarios existentes
-        usuarios = JSONHandlerUsuario.leerUsuarios(FILE_PATH);
+        usuarios = new ArrayList<>(JSONHandlerUsuario.leerUsuarios(FILE_PATH));
 
         // Registro de usuario
         registroButton.setOnAction(e -> {
@@ -90,4 +103,5 @@ public class EmployeeApp extends Application {
         primaryStage.show();
     }
 }
+
 

@@ -1,15 +1,28 @@
 package com.example.carpoolingjava;
 
-
 import java.util.*;
 
+/**
+ * Clase que representa una ruta en un grafo y proporciona métodos para encontrar rutas utilizando el algoritmo de Dijkstra.
+ */
 public class Ruta {
     private Grafo grafo;
 
+    /**
+     * Constructor que recibe un grafo para trabajar con él.
+     *
+     * @param grafo Grafo sobre el cual se realizarán las operaciones de búsqueda de rutas.
+     */
     public Ruta(Grafo grafo) {
         this.grafo = grafo;
     }
 
+    /**
+     * Realiza el algoritmo de Dijkstra para encontrar las distancias mínimas desde un nodo de origen a todos los demás nodos.
+     *
+     * @param origen Nodo de inicio para el algoritmo.
+     * @return Mapa que asocia cada nodo con su distancia mínima desde el origen.
+     */
     public Map<Integer, Integer> dijkstra(int origen) {
         Map<Integer, Integer> distancias = new HashMap<>();
         Map<Integer, Integer> padres = new HashMap<>();
@@ -43,6 +56,9 @@ public class Ruta {
         return padres;
     }
 
+    /**
+     * Realiza la búsqueda de una ruta en el grafo, permitiendo la inclusión de un nodo intermedio.
+     */
     public void encontrarRuta() {
         Scanner scanner = new Scanner(System.in);
 
@@ -70,6 +86,13 @@ public class Ruta {
         }
     }
 
+    /**
+     * Encuentra una ruta desde un nodo de inicio hasta un nodo de destino pasando por un nodo intermedio.
+     *
+     * @param inicio     Nodo de inicio.
+     * @param intermedio Nodo intermedio por el que debe pasar la ruta.
+     * @param destino    Nodo de destino.
+     */
     void encontrarRutaConIntermedio(int inicio, int intermedio, int destino) {
         Map<Integer, Integer> padresDesdeInicio = dijkstra(inicio);
         Map<Integer, Integer> padresDesdeIntermedio = dijkstra(intermedio);
@@ -86,6 +109,12 @@ public class Ruta {
         }
     }
 
+    /**
+     * Encuentra una ruta desde un nodo de inicio hasta un nodo de destino sin incluir nodos intermedios.
+     *
+     * @param inicio  Nodo de inicio.
+     * @param destino Nodo de destino.
+     */
     void encontrarRutaSinIntermedio(int inicio, int destino) {
         Map<Integer, Integer> padres = dijkstra(inicio);
         List<Integer> ruta = construirRuta(padres, destino);
@@ -98,6 +127,13 @@ public class Ruta {
         }
     }
 
+    /**
+     * Construye la ruta a partir de un conjunto de padres y un nodo de destino.
+     *
+     * @param padres  Mapa que asocia cada nodo con su padre en la ruta.
+     * @param destino Nodo de destino.
+     * @return Lista de nodos que forman la ruta desde el nodo de inicio hasta el nodo de destino.
+     */
     private List<Integer> construirRuta(Map<Integer, Integer> padres, int destino) {
         List<Integer> ruta = new ArrayList<>();
         Integer actual = destino;
@@ -111,6 +147,13 @@ public class Ruta {
         return ruta;
     }
 
+    /**
+     * Calcula la distancia total de una ruta dada.
+     *
+     * @param padres Mapa que asocia cada nodo con su padre en la ruta.
+     * @param ruta   Lista de nodos que forman la ruta.
+     * @return Distancia total de la ruta.
+     */
     private int distanciaTotal(Map<Integer, Integer> padres, List<Integer> ruta) {
         int distanciaTotal = 0;
 
@@ -124,6 +167,11 @@ public class Ruta {
         return distanciaTotal;
     }
 
+    /**
+     * Imprime la lista de nodos que forman una ruta.
+     *
+     * @param ruta Lista de nodos que forman la ruta.
+     */
     private void imprimirRuta(List<Integer> ruta) {
         System.out.print("Ruta: ");
         for (int nodo : ruta) {
@@ -132,10 +180,20 @@ public class Ruta {
         System.out.println();
     }
 
+    /**
+     * Imprime la distancia total de una ruta.
+     *
+     * @param peso Distancia total de la ruta.
+     */
     private void imprimirPeso(int peso) {
         System.out.println("Distancia total: " + peso);
     }
 
+    /**
+     * Método principal que crea un grafo aleatorio, imprime sus conexiones y realiza la búsqueda de ruta.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan).
+     */
     public static void main(String[] args) {
         Grafo grafoAleatorio = new Grafo();
         grafoAleatorio.generarGrafo(30);

@@ -10,13 +10,26 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * Clase que representa la aplicación para conductores en el sistema de carpooling.
+ */
 public class DriverApp extends Application {
     private Conductores conductoresActual;
 
+    /**
+     * Método principal que inicia la aplicación JavaFX.
+     *
+     * @param args Argumentos de línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Método que configura y muestra la interfaz de usuario de la aplicación.
+     *
+     * @param primaryStage El escenario principal de la aplicación.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Driver App");
@@ -85,3 +98,4 @@ public class DriverApp extends Application {
         primaryStage.show();
     }
 }
+
