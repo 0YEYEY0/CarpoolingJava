@@ -74,7 +74,7 @@ public class CalificacionApp extends Application {
 
                 for (Usuario usuario : usuarios) {
                     if (carnet.equals(usuario.getCarnet())) {
-                        usuario.setCalificacion(usuario.getCalificacion() + puntuacion);
+                        usuario.calificar(puntuacion);
                         JSONHandlerUsuario.escribirUsuarios(usuarios, "usuarios.json");
                         encontrado = true;
                         actualizarUsuariosTextArea();
@@ -85,7 +85,7 @@ public class CalificacionApp extends Application {
                 if (!encontrado) {
                     for (Conductores conductor : conductores) {
                         if (carnet.equals(conductor.getCarnet())) {
-                            conductor.setCalificacion(conductor.getCalificacion() + puntuacion);
+                            conductor.calificar(puntuacion);
                             JSONHandlerConductor.guardarConductores(conductores);
                             actualizarConductoresTextArea();
                             break;
@@ -109,7 +109,7 @@ public class CalificacionApp extends Application {
         if (usuarios != null) {
             StringBuilder usuariosText = new StringBuilder();
             for (Usuario usuario : usuarios) {
-                usuariosText.append(usuario.getCarnet()).append(": ").append(usuario.getCalificacion()).append("\n");
+                usuariosText.append(usuario.getCarnet()).append(": ").append(usuario.getPromedioCalificacion()).append("\n");
             }
             usuariosTextArea.setText(usuariosText.toString());
         }
@@ -120,11 +120,12 @@ public class CalificacionApp extends Application {
         if (conductores != null) {
             StringBuilder conductoresText = new StringBuilder();
             for (Conductores conductor : conductores) {
-                conductoresText.append(conductor.getCarnet()).append(": ").append(conductor.getCalificacion()).append("\n");
+                conductoresText.append(conductor.getCarnet()).append(": ").append(conductor.getPromedioCalificacion()).append("\n");
             }
             conductoresTextArea.setText(conductoresText.toString());
         }
     }
 }
+
 
 
